@@ -57,7 +57,7 @@ jobs:
         set -x
         mv build/out/* ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/ || true
         # Get rid of boost include directory cause it takes a long time to pack and upload (~20 min)
-        find ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }} -type d -name "include" -exec rm -rf {} +
+        # find ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }} -type d -name "include" -exec rm -rf {} +
         ls -alFR ${GITHUB_WORKSPACE}/bins
       if: always()
     - name: Upload Binaries
