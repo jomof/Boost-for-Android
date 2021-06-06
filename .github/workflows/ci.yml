@@ -16,9 +16,9 @@ jobs:
       matrix:
         boost_version: [1.70.0,1.73.0]
         ndk_version: [20.1.5948944]
-        abi: [armeabi-v7a,arm64-v8a,x86,x86_64]
+        #abi: [armeabi-v7a,arm64-v8a,x86,x86_64]
         #os: [ubuntu-latest,macos-latest]
-        os: ubuntu-latest
+        os: [ubuntu-latest]
         include:
           # includes a new variable of 'variation' for each host os
           - os: ubuntu-latest
@@ -33,7 +33,7 @@ jobs:
     - name: Diagnostics
       run: |
         printenv | grep ANDROID
-        ${ANDROID_HOME}/tools/bin/sdkmanager --list
+        #${ANDROID_HOME}/tools/bin/sdkmanager --list
     - name: Install NDK
       run: |
         ${ANDROID_HOME}/tools/bin/sdkmanager "ndk;${{ matrix.ndk_version }}"
@@ -49,9 +49,9 @@ jobs:
         export NUM_CPU=`python -c 'import multiprocessing as mp; print(mp.cpu_count())'`
         echo "::set-env name=NUM_CPU::$NUM_CPU"
         set
-        mkdir -p bins/${{ matrix.variation }}
-        mkdir -p logs/${{ matrix.variation }}
-    - name: Build Boost for Android on ${{ matrix.variation }}
+        mkdir -p bins
+        mkdir -p logs
+    - name: Build Boost for Android
       run: |
         CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=armeabi-v7a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
         CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=arm64-v8a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
@@ -60,11 +60,11 @@ jobs:
     - name: Prepare Binaries
       run: |
         set -x
-        mv build/out/* ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/ || true
-        # cp -r ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
+        mv build/out/* ${GITHUB_WORKSPACE}/bins/ || true
+        # cp -r ${GITHUB_WORKSPACE}/bins/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
         # Get rid of boost include directory cause it takes a long time to pack and upload (~20 min)
-        find ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }} -type d -name "include" -exec rm -rf {} +
-        #mv ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
+        find ${GITHUB_WORKSPACE}/bins -type d -name "include" -exec rm -rf {} +
+        #mv ${GITHUB_WORKSPACE}/bins/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
         ls -alFR ${GITHUB_WORKSPACE}/bins
       if: always()
     - name: Upload Binaries
@@ -76,7 +76,7 @@ jobs:
     - name: Prepare Logs
       run: |
         set -x
-        mv logs/*.log ${GITHUB_WORKSPACE}/logs/${{ matrix.variation }}/ || true
+        mv logs/*.log ${GITHUB_WORKSPACE}/logs/ || true
         ls -alFR ${GITHUB_WORKSPACE}/logs
       if: always()
     - name: Upload Logs x
