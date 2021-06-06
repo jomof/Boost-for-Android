@@ -56,7 +56,7 @@ jobs:
       run: |
         set -x
         mv build/out/* ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/ || true
-        cp -r ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
+        # cp -r ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
         # Get rid of boost include directory cause it takes a long time to pack and upload (~20 min)
         find ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }} -type d -name "include" -exec rm -rf {} +
         #mv ${GITHUB_WORKSPACE}/bins/${{ matrix.variation }}/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
