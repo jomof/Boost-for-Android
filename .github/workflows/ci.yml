@@ -23,8 +23,8 @@ jobs:
           # includes a new variable of 'variation' for each host os
           - os: ubuntu-latest
             variation: linux
-          - os: macos-latest
-            variation: mac
+          #- os: macos-latest
+           # variation: mac
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
