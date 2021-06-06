@@ -54,9 +54,13 @@ jobs:
     - name: Build Boost for Android
       run: |
         CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=armeabi-v7a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/* ${GITHUB_WORKSPACE}/bins/armeabi-v7a || true
         CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=arm64-v8a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/* ${GITHUB_WORKSPACE}/bins/arm64-v8a || true
         CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/* ${GITHUB_WORKSPACE}/bins/x86 || true
         CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86_64 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/* ${GITHUB_WORKSPACE}/bins/x86_64  || true
     - name: Prepare Binaries
       run: |
         set -x
@@ -79,7 +83,7 @@ jobs:
         mv logs/*.log ${GITHUB_WORKSPACE}/logs/ || true
         ls -alFR ${GITHUB_WORKSPACE}/logs
       if: always()
-    - name: Upload Logs x
+    - name: Upload Logs
       uses: actions/upload-artifact@v1
       with:
         name: logs_${{ matrix.boost_version }}
