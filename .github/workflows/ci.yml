@@ -28,6 +28,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
+    - name: Install NDK
+      run: printenv | grep ANDROID
     - name: Checkout Sources
       uses: actions/checkout@v1
       with:
