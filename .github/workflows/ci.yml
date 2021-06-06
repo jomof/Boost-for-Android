@@ -43,7 +43,7 @@ jobs:
     - name: Setup Environment Variables
       run: |
         set -x
-        export NDK_ROOT=${NDROID_SDK_ROOT}/ndk/${{ matrix.ndk_version }}
+        export NDK_ROOT=${ANDROID_SDK_ROOT}/ndk/${{ matrix.ndk_version }}
         echo "::set-env name=NDK_ROOT::$NDK_ROOT"
         export NUM_CPU=`python -c 'import multiprocessing as mp; print(mp.cpu_count())'`
         echo "::set-env name=NUM_CPU::$NUM_CPU"
