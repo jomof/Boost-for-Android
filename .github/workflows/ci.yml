@@ -29,7 +29,9 @@ jobs:
 
     steps:
     - name: Install NDK
-      run: printenv | grep ANDROID
+      run: |
+        printenv | grep ANDROID
+        ${ANDROID_HOME}/tools/bin/sdkmanager --list
     - name: Checkout Sources
       uses: actions/checkout@v1
       with:
