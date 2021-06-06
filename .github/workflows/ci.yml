@@ -32,7 +32,7 @@ jobs:
       run: |
         printenv | grep ANDROID
         ${ANDROID_HOME}/tools/bin/sdkmanager --list
-        ${ANDROID_HOME}/tools/bin/sdkmanager ndk;20.1.5948944 
+        ${ANDROID_HOME}/tools/bin/sdkmanager "ndk;20.1.5948944"
     - name: Checkout Sources
       uses: actions/checkout@v1
       with:
