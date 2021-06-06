@@ -66,7 +66,7 @@ jobs:
         mv logs/*.log ${GITHUB_WORKSPACE}/logs/${{ matrix.variation }}/ || true
         ls -alFR ${GITHUB_WORKSPACE}/logs
       if: always()
-    - name: Upload Logs
+    - name: Upload Logs x
       uses: actions/upload-artifact@v1
       with:
         name: logs_${{ matrix.boost_version }}
