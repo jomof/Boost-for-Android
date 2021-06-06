@@ -17,7 +17,8 @@ jobs:
         boost_version: [1.70.0,1.73.0]
         ndk_version: [20.1.5948944]
         abi: [armeabi-v7a,arm64-v8a,x86,x86_64]
-        os: [ubuntu-latest,macos-latest]
+        #os: [ubuntu-latest,macos-latest]
+        os: ubuntu-latest
         include:
           # includes a new variable of 'variation' for each host os
           - os: ubuntu-latest
@@ -51,7 +52,11 @@ jobs:
         mkdir -p bins/${{ matrix.variation }}
         mkdir -p logs/${{ matrix.variation }}
     - name: Build Boost for Android on ${{ matrix.variation }}
-      run: CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=${{ matrix.abi }} --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+      run: |
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=armeabi-v7a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=arm64-v8a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86_64 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
     - name: Prepare Binaries
       run: |
         set -x
@@ -65,7 +70,7 @@ jobs:
     - name: Upload Binaries
       uses: actions/upload-artifact@v1
       with:
-        name: binaries_${{ matrix.boost_version }}_${{ matrix.abi }}
+        name: boost_${{ matrix.boost_version }}
         path: ./bins
       if: always()
     - name: Prepare Logs
