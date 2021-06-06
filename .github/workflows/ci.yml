@@ -54,18 +54,16 @@ jobs:
     - name: Build Boost for Android
       run: |
         CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=armeabi-v7a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        ls build/out
-        #mv build/out/lib ${GITHUB_WORKSPACE}/bins/armeabi-v7a || true
-        #CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=arm64-v8a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        #mv build/out/lib ${GITHUB_WORKSPACE}/bins/arm64-v8a || true
-        #CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        #mv build/out/lib ${GITHUB_WORKSPACE}/bins/x86 || true
-        #CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86_64 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        #mv build/out/lib ${GITHUB_WORKSPACE}/bins/x86_64 || true
+        mv build/out/lib ${GITHUB_WORKSPACE}/bins/armeabi-v7a || true
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=arm64-v8a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/lib ${GITHUB_WORKSPACE}/bins/arm64-v8a || true
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/lib ${GITHUB_WORKSPACE}/bins/x86 || true
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86_64 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/lib ${GITHUB_WORKSPACE}/bins/x86_64 || true
     - name: Prepare Binaries
       run: |
         set -x
-        mv build/out/* ${GITHUB_WORKSPACE}/bins/ || true
         # cp -r ${GITHUB_WORKSPACE}/bins/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
         # Get rid of boost include directory cause it takes a long time to pack and upload (~20 min)
         find ${GITHUB_WORKSPACE}/bins -type d -name "include" -exec rm -rf {} +
