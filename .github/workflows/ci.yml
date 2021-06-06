@@ -35,7 +35,7 @@ jobs:
         ${ANDROID_HOME}/tools/bin/sdkmanager --list
     - name: Install NDK
       run: |
-        ${ANDROID_HOME}/tools/bin/sdkmanager "ndk;{{ matrix.ndk_version }}"
+        ${ANDROID_HOME}/tools/bin/sdkmanager "ndk;${{ matrix.ndk_version }}"
     - name: Checkout Sources
       uses: actions/checkout@v1
       with:
@@ -43,20 +43,13 @@ jobs:
     - name: Setup Environment Variables
       run: |
         set -x
-        export NDK_ROOT=${ANDROID_SDK_ROOT}/ndk-bundle
+        export NDK_ROOT=${NDROID_SDK_ROOT}/ndk/${{ matrix.ndk_version }}
         echo "::set-env name=NDK_ROOT::$NDK_ROOT"
         export NUM_CPU=`python -c 'import multiprocessing as mp; print(mp.cpu_count())'`
         echo "::set-env name=NUM_CPU::$NUM_CPU"
         set
         mkdir -p bins/${{ matrix.variation }}
         mkdir -p logs/${{ matrix.variation }}
-    - name: Install dependencies (MacOS))
-      run: |
-        brew update
-        brew cask install android-ndk
-        export NDK_ROOT="$(brew --prefix)/share/android-ndk"
-        echo "::set-env name=NDK_ROOT::$NDK_ROOT"
-      if: matrix.os == 'macos-latest'
     - name: Build Boost for Android on ${{ matrix.variation }}
       run: CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=${{ matrix.abi }} --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
     - name: Prepare Binaries
