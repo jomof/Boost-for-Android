@@ -53,14 +53,11 @@ jobs:
         mkdir -p logs
     - name: Build Boost for Android
       run: |
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=armeabi-v7a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        mv build/out/armeabi-v7a/lib ${GITHUB_WORKSPACE}/bins/armeabi-v7a || true
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=arm64-v8a --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        mv build/out/arm64-v8a/lib ${GITHUB_WORKSPACE}/bins/arm64-v8a || true
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        mv build/out/x86/lib ${GITHUB_WORKSPACE}/bins/x86 || true
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=x86_64 --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        mv build/out/x86_64/lib ${GITHUB_WORKSPACE}/bins/x86_64 || true
+        for abi armeabi-v7a arm64-v8a x86 x86_64 
+        do
+        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=$abi --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
+        mv build/out/$abi/lib ${GITHUB_WORKSPACE}/bins/$abi || true
+        done
     - name: Prepare Binaries
       run: |
         set -x
