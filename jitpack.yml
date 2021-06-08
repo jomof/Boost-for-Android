@@ -1,6 +1,7 @@
 jdk:
   - openjdk11
 before_install:
+  - yes | sdkmanager --install "ndk;20.1.5948944"
   - ./build-all.sh
 install:
   - ./gradlew publishReleasePublicationToMavenLocal
