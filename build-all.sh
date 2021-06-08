@@ -1,3 +1,4 @@
+echo ${JAVA_HOME}
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 yes | sdkmanager --install "ndk;20.1.5948944" > nul
 export NDK_ROOT=${ANDROID_SDK_ROOT:-/Users/jomof/Library/Android/sdk}/ndk/20.1.5948944
