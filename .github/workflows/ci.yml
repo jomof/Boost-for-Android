@@ -18,7 +18,7 @@ jobs:
         ndk_version: [20.1.5948944]
         #abi: [armeabi-v7a,arm64-v8a,x86,x86_64]
         #os: [ubuntu-latest,macos-latest]
-        os: [ubuntu-latest]
+        os: [macos-latest]
         include:
           # includes a new variable of 'variation' for each host os
           - os: ubuntu-latest
