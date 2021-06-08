@@ -1,0 +1,6 @@
+jdk:
+  - openjdk11
+before_install:
+  - ./build-all.sh
+install:
+  - ./gradlew publishReleasePublicationToMavenLocal
