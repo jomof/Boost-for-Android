@@ -19,10 +19,10 @@ jobs:
         #abi: [armeabi-v7a,arm64-v8a,x86,x86_64]
         #os: [ubuntu-latest,macos-latest]
         os: [macos-latest]
-        include:
+        #include:
           # includes a new variable of 'variation' for each host os
-          - os: ubuntu-latest
-            variation: linux
+          #- os: ubuntu-latest
+          #  variation: linux
           #- os: macos-latest
            # variation: mac
       fail-fast: false
