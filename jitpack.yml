@@ -1,4 +1,5 @@
 before_install:
+  - echo $JAVA_HOME
   - yes | sdkmanager --install "ndk;20.1.5948944" > nul
   - sdk install java 11.0.10-open
   - sdk use java 11.0.10-open
