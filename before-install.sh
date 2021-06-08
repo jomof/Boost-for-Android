@@ -18,5 +18,5 @@ do
   mkdir -p bins/prefab/modules/boost
   mv build/out/$abi/lib bins/prefab/modules/boost/android.$abi || true
 done
-ls -alFR
-cat logs/bootstrap.log
+#ls -alFR
+cat boost_1_73_0/bootstrap.log
