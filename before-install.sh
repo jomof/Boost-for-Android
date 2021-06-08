@@ -4,7 +4,6 @@ export NDK_ROOT=${ANDROID_SDK_ROOT}/ndk/20.1.5948944
 export BOOST_VERSION=1.73.0
 mkdir -p bins
 mkdir -p logs
-ls -alFR
 printenv
 pwd
 for abi in armeabi-v7a # arm64-v8a x86 x86_64
@@ -13,4 +12,5 @@ do
   mkdir -p bins/prefab/modules/boost
   mv build/out/$abi/lib bins/prefab/modules/boost/android.$abi || true
 done
+ls -alFR
 cat logs/bootstrap.log
