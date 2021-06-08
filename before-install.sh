@@ -6,7 +6,7 @@ mkdir -p bins
 mkdir -p logs
 echo WHERE IS PATCH?
 which patch
-sudo apt-get install patch
+apt-get install patch
 which patch
 echo WHERE IS PATCH?
 for abi in armeabi-v7a # arm64-v8a x86 x86_64
