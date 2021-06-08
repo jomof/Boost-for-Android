@@ -53,16 +53,6 @@ jobs:
         mkdir -p logs
     - name: Build Boost for Android
       run: ./build-all.sh
-    - name: Prepare Binaries
-      run: |
-        set -x
-        # ls -alFR build/out/
-        # cp -r ${GITHUB_WORKSPACE}/bins/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
-        # Get rid of boost include directory cause it takes a long time to pack and upload (~20 min)
-        find ${GITHUB_WORKSPACE}/bins -type d -name "include" -exec rm -rf {} +
-        find ${GITHUB_WORKSPACE}/bins -type d -name "cmake" -exec rm -rf {} +
-        #mv ${GITHUB_WORKSPACE}/bins/${{ matrix.abi }}/include ${GITHUB_WORKSPACE}/bins/include 
-        ls -alFR ${GITHUB_WORKSPACE}/bins
       if: always()
     - name: Upload Binaries
       uses: actions/upload-artifact@v1
