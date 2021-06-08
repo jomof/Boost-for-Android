@@ -60,6 +60,10 @@ jobs:
         name: boost_${{ matrix.boost_version }}
         path: ./bins
       if: always()
+    - uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '11'
     - name: Build AAR
       run: ./gradlew assemble
     - name: Prepare Logs
