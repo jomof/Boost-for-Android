@@ -1,6 +1,6 @@
 jdk:
   - openjdk11
 before_install:
-  - ./before-install.sh
+  - ./build-all.sh
 install:
   - ./gradlew publishReleasePublicationToMavenLocal

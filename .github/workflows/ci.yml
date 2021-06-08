@@ -52,13 +52,7 @@ jobs:
         mkdir -p bins
         mkdir -p logs
     - name: Build Boost for Android
-      run: |
-        for abi in armeabi-v7a arm64-v8a x86 x86_64 
-        do
-        CXXFLAGS="-std=c++14" ./build-android.sh --boost=${{ matrix.boost_version }} --arch=$abi --with-libraries=atomic,random,date_time,filesystem,system,thread,chrono "${NDK_ROOT}"
-        mkdir -p ${GITHUB_WORKSPACE}/bins/prefab/modules/boost
-        mv build/out/$abi/lib ${GITHUB_WORKSPACE}/bins/prefab/modules/boost/android.$abi || true
-        done
+      run: ./build-all.sh
     - name: Prepare Binaries
       run: |
         set -x
@@ -76,6 +70,8 @@ jobs:
         name: boost_${{ matrix.boost_version }}
         path: ./bins
       if: always()
+    - name: Build AAR
+      run: ./gradlew assemble
     - name: Prepare Logs
       run: |
         set -x
